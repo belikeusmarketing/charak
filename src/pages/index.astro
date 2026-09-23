@@ -35,6 +35,7 @@ const faqs = [
 ];
 const wa = "https://wa.me/917038829809";
 const isEditorial = false;
+const wcStoreUrl = "https://yellowgreen-gnu-156694.hostingersite.com/wp-json/wc/store/v1";
 ---
 <Base title="JEEV ANKUR — Ayurvedic Hair Care by Charak Hair Care" description="Complete Ayurvedic care for hair fall, weak roots, dandruff and scalp health. Free hair checkups, weekly camps in MP, Pan India delivery & COD available.">
 <style is:global>
@@ -175,28 +176,77 @@ const isEditorial = false;
   <div class="max-w-7xl mx-auto px-4">
     <div class="text-center max-w-2xl mx-auto" data-reveal>
       <h2 class="serif text-4xl md:text-5xl font-bold text-[var(--forest)]">Our Ayurvedic Hair Care Products</h2>
-      <p class="mt-4 text-[#4c5b45]">A complete 5-step approach for healthier, stronger and naturally beautiful hair.</p>
+      <p class="mt-4 text-[#4c5b45]">Shop the complete JEEV ANKUR Hair Care Kit directly from Charak Hair Care.</p>
     </div>
-    <div id="product-grid" class="mt-12 grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
-      {products.map(p => (
-        <article class="bg-white rounded-2xl border border-[var(--beige)] shadow-sm hover:shadow-xl transition overflow-hidden flex flex-col" data-reveal>
-          <div class="bg-[var(--beige)]"><img src={p.img} alt={p.name} loading="lazy" class="w-full h-44 md:h-52 object-cover" /></div>
-          <div class="p-4 flex flex-col gap-2 flex-1">
-            <h3 class="serif font-bold text-lg text-[var(--forest)]">{p.name}</h3>
-            <p class="text-xs text-[var(--gold)] font-semibold">{p.qty}</p>
-            <p class="text-sm text-[#4c5b45] flex-1">{p.desc}</p>
-            <p class="font-bold text-[var(--forest)]">{p.price} <span class="text-xs font-normal text-[#7a8a72] line-through ml-1">MRP ₹{Math.round(parseInt(p.price.slice(1))*1.25)}</span></p>
-            <div class="flex gap-2 mt-1">
-              <button class="add-cart btn-primary text-xs font-semibold px-3 py-2 rounded-full flex-1" data-name={p.name}>Add to Cart</button>
-              <button class="text-xs font-semibold px-3 py-2 rounded-full flex-1 border border-[var(--forest)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-white" data-buy={p.name}>Buy Now</button>
-            </div>
-            <a href="#contact" class="text-center text-xs text-[var(--gold)] font-semibold hover:underline">View Details</a>
+    <div id="product-grid" class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <article id="wc-product-card" class="bg-white rounded-2xl border border-[var(--beige)] shadow-sm hover:shadow-xl transition overflow-hidden flex flex-col" data-reveal>
+        <div class="bg-[var(--beige)] relative">
+          <img id="wc-product-image" src="https://images.pexels.com/photos/17307533/pexels-photo-17307533.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="JEEV ANKUR Hair Care Kit" loading="lazy" class="w-full h-64 md:h-72 object-cover" />
+          <span class="absolute top-4 left-4 bg-[var(--gold)] text-[#1c1408] text-xs font-bold px-3 py-1 rounded-full">ONLINE STORE</span>
+        </div>
+        <div class="p-6 flex flex-col gap-2 flex-1">
+          <h3 id="wc-product-name" class="serif font-bold text-2xl text-[var(--forest)]">Jeev Ankur Hair Care Kit</h3>
+          <p id="wc-product-desc" class="text-sm text-[#4c5b45] flex-1">Complete Ayurvedic hair-care routine with the products selected by Charak Hair Care.</p>
+          <p id="wc-product-price" class="font-bold text-xl text-[var(--forest)]">Loading price…</p>
+          <p id="wc-product-stock" class="text-xs font-semibold text-[var(--gold)]">Checking availability…</p>
+          <div class="flex gap-2 mt-2">
+            <button id="wc-add-cart" class="btn-primary text-sm font-semibold px-4 py-3 rounded-full flex-1">Add to Cart</button>
+            <button id="wc-buy-now" class="text-sm font-semibold px-4 py-3 rounded-full flex-1 border border-[var(--forest)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-white">Buy Now</button>
           </div>
-        </article>
-      ))}
+        </div>
+      </article>
     </div>
+    <p id="wc-store-error" class="hidden text-center mt-6 text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl p-4 max-w-2xl mx-auto"></p>
   </div>
 </section>
+
+<!-- CART / CHECKOUT DRAWER -->
+<div id="wc-cart-backdrop" class="hidden fixed inset-0 z-[80] bg-black/40"></div>
+<aside id="wc-cart-drawer" class="fixed top-0 right-0 z-[90] h-full w-full max-w-md translate-x-full bg-[var(--ivory)] shadow-2xl transition-transform duration-300 flex flex-col" aria-hidden="true">
+  <div class="p-5 border-b border-[var(--beige)] flex items-center justify-between">
+    <div><h2 class="serif text-2xl font-bold text-[var(--forest)]">Your Cart</h2><p id="wc-cart-subtitle" class="text-xs text-[#4c5b45] mt-1">Secure checkout powered by WooCommerce</p></div>
+    <button id="wc-cart-close" aria-label="Close cart" class="w-10 h-10 rounded-full border border-[var(--beige)] text-xl">×</button>
+  </div>
+  <div id="wc-cart-content" class="flex-1 overflow-y-auto p-5">
+    <p class="text-sm text-[#4c5b45]">Loading cart…</p>
+  </div>
+  <div class="border-t border-[var(--beige)] p-5 bg-white">
+    <div class="flex justify-between font-semibold text-[var(--forest)]"><span>Total</span><span id="wc-cart-total">₹0</span></div>
+    <button id="wc-checkout-btn" class="btn-primary w-full mt-4 py-3 rounded-full font-semibold">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<div id="wc-checkout-modal" class="hidden fixed inset-0 z-[100] bg-black/50 p-4 overflow-y-auto">
+  <div class="max-w-xl mx-auto my-8 bg-[var(--ivory)] rounded-3xl shadow-2xl overflow-hidden">
+    <div class="p-5 border-b border-[var(--beige)] flex items-center justify-between">
+      <div><h2 class="serif text-2xl font-bold text-[var(--forest)]">Secure Checkout</h2><p class="text-xs text-[#4c5b45] mt-1">Your order will be created in WooCommerce.</p></div>
+      <button id="wc-checkout-close" class="w-10 h-10 rounded-full border border-[var(--beige)] text-xl">×</button>
+    </div>
+    <form id="wc-checkout-form" class="p-5 space-y-4">
+      <div class="grid sm:grid-cols-2 gap-3">
+        <input name="first_name" required placeholder="First name" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+        <input name="last_name" placeholder="Last name" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+      </div>
+      <input name="email" type="email" required placeholder="Email address" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+      <input name="phone" required placeholder="Mobile number" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+      <input name="address_1" required placeholder="House / Street address" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+      <div class="grid sm:grid-cols-2 gap-3">
+        <input name="city" required placeholder="City" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+        <input name="state" required placeholder="State (e.g. MP)" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <input name="postcode" required inputmode="numeric" placeholder="PIN code" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3" />
+        <select name="country" class="w-full rounded-xl border border-[var(--beige)] bg-white px-4 py-3"><option value="IN">India</option></select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-[var(--forest)] mb-2">Payment method</label>
+        <div id="wc-payment-methods" class="space-y-2"><p class="text-sm text-[#4c5b45]">Loading payment methods…</p></div>
+      </div>
+      <p id="wc-checkout-message" class="hidden text-sm rounded-xl p-3"></p>
+      <button id="wc-place-order" type="submit" class="btn-primary w-full py-3.5 rounded-full font-semibold">Place Order</button>
+    </form>
+  </div>
+</div>
 
 <!-- HAIR CONCERNS -->
 <section class="py-20 md:py-28 bg-[var(--forest)] text-[var(--cream)]">
@@ -350,17 +400,10 @@ const isEditorial = false;
 
 <!-- CONTACT -->
 <section id="contact" class="py-20 md:py-28 bg-[var(--ivory)]">
-  <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-start">
-    <div data-reveal>
-      <h2 class="serif text-4xl font-bold text-[var(--forest)]">Book Your Free Checkup</h2>
-      <p class="mt-4 text-[#4c5b45]">Share your details and our team will reach out with your nearest hair camp and a personalized routine. Prefer instant help? Message us on WhatsApp at <a href={wa} class="font-semibold text-[var(--forest)] underline">7038829809</a>.</p>
-      <ul class="mt-6 space-y-3 text-sm text-[#4c5b45]">
-        <li>📞 7038829809</li>
-        <li>✉️ support@charakhaircare.com</li>
-        <li>📍 Charak Hair Care, Indore, Madhya Pradesh</li>
-      </ul>
-    </div>
-    <KleapForm client:load formId="contact" title="Book Free Checkup" fields={[{name:"name",label:"Your Name",type:"text",required:true},{name:"phone",label:"Phone / WhatsApp Number",type:"tel",required:true},{name:"city",label:"City",type:"text",required:true},{name:"concern",label:"Your Hair Concern",type:"textarea",required:false}]} submitText="Book Free Checkup" />
+  <div class="max-w-5xl mx-auto px-4 text-center" data-reveal>
+    <h2 class="serif text-4xl font-bold text-[var(--forest)]">Need Help With Your Order?</h2>
+    <p class="mt-4 text-[#4c5b45] max-w-2xl mx-auto">For product questions, order assistance or delivery support, contact Charak Hair Care on WhatsApp.</p>
+    <a href={wa} class="inline-flex mt-7 btn-primary font-semibold px-8 py-4 rounded-full">Chat on WhatsApp →</a>
   </div>
 </section>
 </main>
@@ -413,11 +456,150 @@ const isEditorial = false;
 </footer>
 
 <script is:inline>
+  const WC_STORE = "https://yellowgreen-gnu-156694.hostingersite.com/wp-json/wc/store/v1";
+  const WC_SLUG = "jeev-ankur-hair-care-kit";
+  let wcProduct = null;
+  let wcCartToken = localStorage.getItem("charak_wc_cart_token") || "";
+
+  const $ = (id) => document.getElementById(id);
+  const money = (minor, currency = "INR") => new Intl.NumberFormat("en-IN", { style: "currency", currency, maximumFractionDigits: 0 }).format(Number(minor || 0) / 100);
+
+  function showStoreError(message) {
+    const el = $("wc-store-error");
+    if (!el) return;
+    el.textContent = message;
+    el.classList.remove("hidden");
+  }
+
+  async function wcFetch(path, options = {}) {
+    const headers = new Headers(options.headers || {});
+    headers.set("Accept", "application/json");
+    if (options.body && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
+    if (wcCartToken) headers.set("Cart-Token", wcCartToken);
+    const response = await fetch(WC_STORE + path, { ...options, headers, cache: "no-store" });
+    const newToken = response.headers.get("Cart-Token");
+    if (newToken) { wcCartToken = newToken; localStorage.setItem("charak_wc_cart_token", newToken); }
+    const text = await response.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = { message: text }; }
+    if (!response.ok) throw new Error(data?.message || data?.code || `WooCommerce request failed (${response.status})`);
+    return data;
+  }
+
+  async function loadProduct() {
+    try {
+      const products = await wcFetch(`/products?slug=${encodeURIComponent(WC_SLUG)}`);
+      wcProduct = products?.[0] || null;
+      if (!wcProduct) throw new Error("Hair Care Kit product was not found in WooCommerce.");
+      $("wc-product-name").textContent = wcProduct.name;
+      $("wc-product-desc").innerHTML = wcProduct.short_description || wcProduct.description || "Complete JEEV ANKUR Hair Care Kit.";
+      $("wc-product-price").textContent = money(wcProduct.prices?.price, wcProduct.prices?.currency_code || "INR");
+      $("wc-product-stock").textContent = wcProduct.is_in_stock ? "In stock • Pan India delivery" : "Currently unavailable";
+      if (wcProduct.images?.[0]?.src) $("wc-product-image").src = wcProduct.images[0].src;
+      $("wc-add-cart").disabled = !wcProduct.is_in_stock;
+      $("wc-buy-now").disabled = !wcProduct.is_in_stock;
+    } catch (e) {
+      showStoreError("WooCommerce connection needs one setup step. Please complete the CORS setup in WordPress, then reload this page.");
+      $("wc-product-price").textContent = "Price unavailable";
+      console.error(e);
+    }
+  }
+
+  function openCart() {
+    $("wc-cart-backdrop").classList.remove("hidden");
+    $("wc-cart-drawer").classList.remove("translate-x-full");
+    $("wc-cart-drawer").setAttribute("aria-hidden", "false");
+    refreshCart();
+  }
+  function closeCart() {
+    $("wc-cart-backdrop").classList.add("hidden");
+    $("wc-cart-drawer").classList.add("translate-x-full");
+    $("wc-cart-drawer").setAttribute("aria-hidden", "true");
+  }
+
+  async function refreshCart() {
+    try {
+      const cart = await wcFetch("/cart");
+      const items = cart?.items || [];
+      $("cart-count").textContent = items.reduce((n, item) => n + Number(item.quantity || 0), 0);
+      $("cart-count").classList.toggle("hidden", !items.length);
+      $("cart-count").classList.toggle("flex", !!items.length);
+      $("wc-cart-total").textContent = money(cart?.totals?.total_price, cart?.totals?.currency_code || "INR");
+      $("wc-cart-content").innerHTML = items.length ? items.map(item => `<div class="flex gap-3 py-3 border-b border-[var(--beige)]"><img src="${item.images?.[0]?.thumbnail || item.images?.[0]?.src || ""}" class="w-16 h-16 rounded-xl object-cover bg-[var(--beige)]" alt=""><div class="flex-1"><p class="font-semibold text-[var(--forest)]">${item.name}</p><p class="text-xs text-[#4c5b45] mt-1">Qty: ${item.quantity}</p><p class="text-sm font-semibold mt-1">${money(item.totals?.line_total, cart?.totals?.currency_code || "INR")}</p></div></div>`).join("") : `<div class="text-center py-10"><p class="font-semibold text-[var(--forest)]">Your cart is empty.</p><p class="text-sm text-[#4c5b45] mt-2">Add the Hair Care Kit to continue.</p></div>`;
+      $("wc-checkout-btn").disabled = !items.length;
+    } catch (e) {
+      $("wc-cart-content").innerHTML = `<p class="text-sm text-red-700">Unable to load cart. Please refresh and try again.</p>`;
+      console.error(e);
+    }
+  }
+
+  async function addToCart(buyNow = false) {
+    if (!wcProduct) return showStoreError("Product is still loading. Please try again in a moment.");
+    try {
+      await wcFetch(`/cart/add-item`, { method: "POST", body: JSON.stringify({ id: wcProduct.id, quantity: 1 }) });
+      if (buyNow) { openCheckout(); } else { openCart(); }
+    } catch (e) {
+      showStoreError("Could not add the product to cart. Please reload and try again.");
+      console.error(e);
+    }
+  }
+
+  async function openCheckout() {
+    try {
+      closeCart();
+      $("wc-checkout-modal").classList.remove("hidden");
+      const checkout = await wcFetch("/checkout");
+      const methods = checkout?.payment_methods || [];
+      const container = $("wc-payment-methods");
+      container.innerHTML = methods.length ? methods.map((m, i) => `<label class="flex items-center gap-3 border border-[var(--beige)] rounded-xl p-3 bg-white cursor-pointer"><input type="radio" name="payment_method" value="${m.id}" ${i === 0 ? "checked" : ""} /><span><span class="block font-semibold text-[var(--forest)]">${m.title || m.id}</span>${m.description ? `<span class="block text-xs text-[#4c5b45] mt-1">${m.description}</span>` : ""}</span></label>`).join("") : `<p class="text-sm text-red-700 bg-red-50 p-3 rounded-xl">No payment method is enabled in WooCommerce yet.</p>`;
+    } catch (e) {
+      $("wc-checkout-message").textContent = "Checkout could not be loaded. Please make sure a WooCommerce payment method is enabled.";
+      $("wc-checkout-message").className = "text-sm rounded-xl p-3 bg-red-50 text-red-700";
+      console.error(e);
+    }
+  }
+
+  $("wc-add-cart").addEventListener("click", () => addToCart(false));
+  $("wc-buy-now").addEventListener("click", () => addToCart(true));
+  $("wc-cart-backdrop").addEventListener("click", closeCart);
+  $("wc-cart-close").addEventListener("click", closeCart);
+  $("wc-checkout-btn").addEventListener("click", openCheckout);
+  $("wc-checkout-close").addEventListener("click", () => $("wc-checkout-modal").classList.add("hidden"));
+  document.querySelector('button[aria-label="Cart"]')?.addEventListener("click", openCart);
+
+  $("wc-checkout-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = $("wc-place-order");
+    const message = $("wc-checkout-message");
+    button.disabled = true;
+    button.textContent = "Placing Order…";
+    message.className = "hidden text-sm rounded-xl p-3";
+    const form = new FormData(event.currentTarget);
+    const billing = {
+      first_name: String(form.get("first_name") || ""), last_name: String(form.get("last_name") || ""), email: String(form.get("email") || ""), phone: String(form.get("phone") || ""), address_1: String(form.get("address_1") || ""), city: String(form.get("city") || ""), state: String(form.get("state") || ""), postcode: String(form.get("postcode") || ""), country: String(form.get("country") || "IN")
+    };
+    const payment_method = String(form.get("payment_method") || "");
+    try {
+      const result = await wcFetch("/checkout", { method: "POST", body: JSON.stringify({ billing_address: billing, shipping_address: billing, payment_method }) });
+      if (result?.payment_result?.redirect_url) {
+        window.location.href = result.payment_result.redirect_url;
+      } else {
+        message.textContent = `Order placed successfully. Order #${result.order_id || ""}`;
+        message.className = "text-sm rounded-xl p-3 bg-green-50 text-green-800";
+        button.textContent = "Order Placed ✓";
+      }
+    } catch (e) {
+      message.textContent = e.message || "Unable to place order. Please check your details and try again.";
+      message.className = "text-sm rounded-xl p-3 bg-red-50 text-red-700";
+      button.disabled = false;
+      button.textContent = "Place Order";
+      console.error(e);
+    }
+  });
+
   document.getElementById("menu-btn").addEventListener("click", () => document.getElementById("mobile-menu").classList.toggle("hidden"));
-  // reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: 0.12 });
   document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
-  // carousel
   const track = document.getElementById("reel-track"), dots = document.getElementById("reel-dots");
   const cards = track.children, n = cards.length;
   for (let i = 0; i < n; i++) { const d = document.createElement("button"); d.className = "w-2.5 h-2.5 rounded-full bg-[#d8cdb4] transition"; d.setAttribute("aria-label","Go to story "+(i+1)); d.onclick = () => cards[i].scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"}); dots.appendChild(d); }
@@ -425,11 +607,8 @@ const isEditorial = false;
   track.addEventListener("scroll", () => requestAnimationFrame(setDot)); setDot();
   document.getElementById("reel-prev").onclick = () => track.scrollBy({left: -cards[0].offsetWidth - 16, behavior:"smooth"});
   document.getElementById("reel-next").onclick = () => track.scrollBy({left: cards[0].offsetWidth + 16, behavior:"smooth"});
-  // cart
-  let count = 0; const badge = document.getElementById("cart-count");
-  document.querySelectorAll(".add-cart").forEach(b => b.addEventListener("click", () => { count++; badge.textContent = count; badge.classList.remove("hidden"); badge.classList.add("flex"); }));
-  document.querySelectorAll("[data-buy]").forEach(b => b.addEventListener("click", () => { alert("Taking you to secure checkout for " + b.dataset.buy + " — COD and online payment both available."); }));
-  // faq single-open
   document.querySelectorAll("#faq details").forEach(d => d.addEventListener("toggle", () => { if (d.open) document.querySelectorAll("#faq details").forEach(o => o !== d && (o.open = false)); }));
+
+  loadProduct();
 </script>
 </Base>
