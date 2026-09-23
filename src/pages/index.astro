@@ -1,0 +1,435 @@
+---
+import Base from "../layouts/Base.astro";
+import KleapForm from "@/components/KleapForm";
+const testimonialVideos = [
+  { name: "Amit S.", city: "Indore", caption: "Hair fall kam hua aur improvement notice hua.", dur: "1:24", thumb: "https://images.pexels.com/photos/28994388/pexels-photo-28994388.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Sneha P.", city: "Ujjain", caption: "Scalp ki problem ab kaafi kam ho gayi.", dur: "0:58", thumb: "https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Rohit K.", city: "Dewas", caption: "6 weeks me visible improvement notice kiya.", dur: "1:12", thumb: "https://images.pexels.com/photos/29201032/pexels-photo-29201032.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Neha T.", city: "Pithampur", caption: "Products natural hain aur hair better feel hote hain.", dur: "1:05", thumb: "https://images.pexels.com/photos/37114348/pexels-photo-37114348.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Imran S.", city: "Indore", caption: "Dandruff ki problem me improvement mila.", dur: "0:49", thumb: "https://images.pexels.com/photos/5720765/pexels-photo-5720765.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Pooja M.", city: "Ujjain", caption: "Mere baal pehle se stronger feel hote hain.", dur: "1:31", thumb: "https://images.pexels.com/photos/28994390/pexels-photo-28994390.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+];
+const products = [
+  { name: "Hair Care Oil", qty: "Net Qty: 50ml", desc: "Nourishes the scalp, supports stronger-looking roots and healthy hair.", price: "₹499", img: "https://images.pexels.com/photos/17307533/pexels-photo-17307533.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Hair Shampoo", qty: "Net Vol: 100ml", desc: "Gently cleanses the hair and scalp while supporting healthy-looking hair.", price: "₹349", img: "https://images.pexels.com/photos/7148534/pexels-photo-7148534.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Hair Churan", qty: "Net Wt: 50gm", desc: "Supports internal nourishment and digestive wellness.", price: "₹299", img: "https://images.pexels.com/photos/34928280/pexels-photo-34928280.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Hair Capsules", qty: "30 Capsules", desc: "Provides nutritional support for stronger, healthier-looking hair.", price: "₹399", img: "https://images.pexels.com/photos/11465970/pexels-photo-11465970.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { name: "Detoxifier Churan", qty: "Net Wt: 90gm", desc: "Supports digestion and overall wellness.", price: "₹349", img: "https://images.pexels.com/photos/34928286/pexels-photo-34928286.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+];
+const camps = [
+  { city: "Indore — Khajrana", day: "Every Sunday", time: "11 AM – 7 PM", addr: "Near Bade Madarse, Opposite Royal Care Hospital, Indore" },
+  { city: "Pithampur", day: "Every Sunday", time: "12 PM – 5 PM", addr: "Hotel Handi, Chaupati, Near Manaal Hotel, Pithampur" },
+  { city: "Ujjain", day: "Every Monday", time: "11 AM – 5 PM", addr: "In front of Madhya Pradesh Gramin Bank, Nanakheda, Ujjain" },
+  { city: "Dewas", day: "Every Monday", time: "11 AM – 5 PM", addr: "Near Bus Stand, Mandi Dharamshala, Dewas" },
+];
+const faqs = [
+  { q: "Is the checkup really free?", a: "Yes. Every hair camp visit includes a completely free hair and scalp checkup — no purchase necessary." },
+  { q: "How does the hair camp consultation work?", a: "You visit a camp near you, our team assesses your hair and scalp, understands your concerns and gives you personalized Ayurvedic guidance." },
+  { q: "How long does it take to see results?", a: "Every person is different. Many customers report noticing improvement within a few weeks of consistent use, but outcomes vary." },
+  { q: "Can men and women use these products?", a: "Yes, the complete Charak Hair Care range is suitable for both men and women of all hair types." },
+  { q: "How should I use the products?", a: "Each product comes with clear usage instructions on its pack. You'll also receive a personalized routine at your camp checkup or on WhatsApp." },
+  { q: "Do you offer Cash on Delivery?", a: "Yes, COD is available across India along with prepaid online payment options." },
+  { q: "Can I order the products online?", a: "Yes. Add products to your cart and checkout here, or message us on WhatsApp at 7038829809 for assistance." },
+  { q: "Where are the Charak Hair Care camps located?", a: "We run weekly camps in Indore (Khajrana), Pithampur, Ujjain and Dewas — see the Hair Camps section for days and timings." },
+  { q: "Can I contact Charak Hair Care on WhatsApp?", a: "Absolutely — message us anytime at 7038829809 and our team will help you." },
+];
+const wa = "https://wa.me/917038829809";
+const isEditorial = false;
+---
+<Base title="JEEV ANKUR — Ayurvedic Hair Care by Charak Hair Care" description="Complete Ayurvedic care for hair fall, weak roots, dandruff and scalp health. Free hair checkups, weekly camps in MP, Pan India delivery & COD available.">
+<style is:global>
+  :root { --forest:#123524; --botanical:#1e4632; --sage:#7a9b76; --gold:#b99457; --cream:#f7f2e7; --ivory:#fdfaf3; --beige:#e9dfc9; }
+  body { font-family: 'Manrope', sans-serif; background: var(--ivory); color: #22301f; }
+  .serif { font-family: 'Fraunces', serif; }
+  .btn-primary { background:#123524; color:#fdfaf3; }
+  .btn-primary:hover { background:#1e4632; }
+  .btn-gold { background: var(--gold); color:#1c1408; }
+  .chip { border:1px solid var(--beige); background: var(--cream); }
+  [data-reveal]{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  [data-reveal].in{opacity:1; transform:none;}
+  .reel { aspect-ratio: 9/16; }
+  .no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none}
+  details[open] .faq-icon{transform:rotate(45deg)}
+</style>
+
+<!-- Announcement bar -->
+<div class="bg-[var(--forest)] text-[var(--cream)] text-xs md:text-sm">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-center md:justify-between gap-2">
+    <p>100% Ayurvedic &nbsp;|&nbsp; No Harsh Chemicals &nbsp;|&nbsp; Trusted by Thousands</p>
+    <a href={wa} class="underline underline-offset-2 text-[#fdfaf3] hover:text-white">Call / WhatsApp: 7038829809</a>
+  </div>
+</div>
+
+<!-- Sticky header -->
+<header class="sticky top-0 z-50 bg-[var(--ivory)]/95 backdrop-blur border-b border-[var(--beige)]">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <a href="/" class="leading-tight">
+      <div class="serif text-xl md:text-2xl font-bold tracking-wide text-[var(--forest)]">JEEV ANKUR</div>
+      <div class="text-[10px] md:text-xs tracking-[0.25em] text-[var(--gold)] uppercase">By Charak Hair Care</div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+      <a href="/" class="hover:text-[var(--forest)]">Home</a>
+      <a href="#about" class="hover:text-[var(--forest)]">About</a>
+      <a href="#products" class="hover:text-[var(--forest)]">Products</a>
+      <a href="#camps" class="hover:text-[var(--forest)]">Hair Camps</a>
+      <a href="#stories" class="hover:text-[var(--forest)]">Real Stories</a>
+      <a href="#how" class="hover:text-[var(--forest)]">How to Use</a>
+      <a href="#faq" class="hover:text-[var(--forest)]">FAQ</a>
+      <a href="#contact" class="hover:text-[var(--forest)]">Contact</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button aria-label="Search" class="hidden md:block p-2 rounded-full hover:bg-[var(--cream)]">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+      </button>
+      <button aria-label="Cart" class="relative p-2 rounded-full hover:bg-[var(--cream)]">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <span id="cart-count" class="hidden absolute -top-1 -right-1 bg-[var(--gold)] text-[10px] font-bold w-5 h-5 rounded-full items-center justify-center text-[#1c1408]">0</span>
+      </button>
+      <a href="#contact" class="hidden sm:inline-flex btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Book Free Checkup</a>
+      <button id="menu-btn" aria-label="Menu" class="lg:hidden p-2 rounded-full hover:bg-[var(--cream)]">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-[var(--beige)] bg-[var(--ivory)] px-4 py-4">
+    <nav class="flex flex-col gap-3 text-sm font-medium">
+      <a href="/">Home</a><a href="#about">About</a><a href="#products">Products</a><a href="#camps">Hair Camps</a><a href="#stories">Real Stories</a><a href="#how">How to Use</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+      <a href="#contact" class="btn-primary text-center font-semibold px-5 py-3 rounded-full mt-2">Book Free Checkup</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="relative overflow-hidden bg-[var(--cream)]">
+  <svg class="absolute -top-6 -left-8 w-40 opacity-10 text-[var(--forest)]" viewBox="0 0 100 100" fill="currentColor"><path d="M50 5C20 25 10 55 25 90c30-10 45-40 25-85Z"/><path d="M55 15 30 80" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+  <svg class="absolute bottom-0 right-0 w-56 opacity-10 text-[var(--forest)]" viewBox="0 0 100 100" fill="currentColor"><path d="M95 10C55 20 30 55 40 95c35-5 55-40 55-85Z"/></svg>
+  <div class="max-w-7xl mx-auto px-4 py-16 md:py-24 grid lg:grid-cols-[1.1fr_1fr] gap-12 items-center">
+    <div data-reveal>
+      <p class="text-xs md:text-sm tracking-[0.3em] uppercase text-[#7a5a1e] font-semibold">Ayurvedic Hair Care for a Healthier You</p>
+      <h1 class="serif text-5xl md:text-7xl font-bold mt-4 leading-[1.05] text-[var(--forest)]">Stronger Roots<br/>Healthier Hair<br/>Naturally</h1>
+      <p class="mt-6 text-lg text-[#4c5b45] max-w-xl">Complete Ayurvedic care for hair fall, weak roots, dandruff and scalp health.</p>
+      <div class="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs sm:text-sm font-medium min-w-0">
+        {["100% Ayurvedic","No Harsh Chemicals","Suitable for All Hair Types","Trusted by Thousands"].map(t => <div class="chip rounded-full px-2.5 py-2 text-center text-[#3c4a36] leading-tight break-words">{t}</div>)}
+      </div>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#contact" class="btn-primary font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-[var(--forest)]/20">Book Free Checkup →</a>
+        <a href={wa} class="border border-[var(--forest)] text-[var(--forest)] font-semibold px-7 py-3.5 rounded-full hover:bg-[var(--forest)] hover:text-white">Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="relative" data-reveal>
+      <div class="rounded-3xl overflow-hidden shadow-2xl bg-[var(--beige)]">
+        <img src="https://assets.kleap.io/103503/images/1790181563300-ChatGPT_Image_Sep_23__2026__03_38_29_PM.png" alt="JEEV ANKUR Ayurvedic hair care product range with natural ingredients" class="w-full h-[420px] md:h-[540px] object-cover" />
+      </div>
+      <div class="absolute top-3 left-3 md:-top-6 md:-left-6 w-24 h-24 md:w-32 md:h-32 rounded-full bg-[var(--gold)] text-[#1c1408] flex flex-col items-center justify-center text-center shadow-xl rotate-[-8deg] border-4 border-[var(--ivory)]">
+        <span class="text-[10px] font-bold tracking-widest">COMPLETE</span>
+        <span class="serif text-2xl md:text-3xl font-bold leading-none">5 IN 1</span>
+        <span class="text-[10px] font-bold tracking-widest">HAIR CARE</span>
+      </div>
+      <div class="absolute -bottom-5 right-4 chip rounded-full px-4 py-2 text-xs font-semibold text-[var(--forest)] shadow">Hair Oil • Shampoo • Churan • Capsules • Detoxifier</div>
+    </div>
+  </div>
+  <!-- benefit strip -->
+  <div class="bg-[var(--forest)] text-[var(--cream)]">
+    <div class="max-w-7xl mx-auto px-4 py-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm font-medium text-center">
+      {["Visit Our Hair Camps","100% Original Charak Hair Care","Pan India Delivery","COD Available"].map(t => <div>{t}</div>)}
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL VIDEOS 9:16 -->
+<section id="stories" class="py-20 md:py-28 bg-[var(--ivory)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <p class="text-xs tracking-[0.3em] uppercase text-[#7a5a1e] font-semibold">Real People • Real Stories</p>
+      <h2 class="serif text-4xl md:text-5xl font-bold mt-3 text-[var(--forest)]">Hear It From Our Customers</h2>
+      <p class="mt-4 text-[#4c5b45]">Real customer experiences and personal hair-care journeys with Charak Hair Care.</p>
+    </div>
+    <div class="relative mt-10" data-reveal>
+      <div id="reel-track" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
+        {testimonialVideos.map(v => (
+          <div class="reel snap-center shrink-0 w-[78vw] sm:w-[320px] md:w-[calc((100%-4rem)/5)] rounded-2xl overflow-hidden border border-[var(--beige)] shadow-lg group relative bg-[var(--forest)]">
+            <img src={v.thumb} alt={`Customer story — ${v.name}, ${v.city}`} loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30"></div>
+            <div class="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full">{v.dur}</div>
+            <button aria-label="Play video" class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-[var(--gold)]/95 flex items-center justify-center shadow-xl group-hover:scale-110 transition">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1c1408"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="absolute bottom-0 inset-x-0 p-4 text-white">
+              <p class="text-sm leading-snug text-white">“{v.caption}”</p>
+              <p class="mt-2 text-xs font-semibold tracking-wide text-[var(--gold)]">{v.name} · {v.city}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button id="reel-prev" aria-label="Previous" class="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg border border-[var(--beige)] items-center justify-center hover:bg-[var(--cream)]">‹</button>
+      <button id="reel-next" aria-label="Next" class="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg border border-[var(--beige)] items-center justify-center hover:bg-[var(--cream)]">›</button>
+      <div id="reel-dots" class="flex justify-center gap-2 mt-6"></div>
+    </div>
+    <div class="text-center mt-8" data-reveal><a href={wa} class="text-[var(--forest)] font-semibold hover:underline">Watch More Customer Stories →</a></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-20 md:py-28 bg-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <h2 class="serif text-4xl md:text-5xl font-bold text-[var(--forest)]">Our Ayurvedic Hair Care Products</h2>
+      <p class="mt-4 text-[#4c5b45]">A complete 5-step approach for healthier, stronger and naturally beautiful hair.</p>
+    </div>
+    <div id="product-grid" class="mt-12 grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+      {products.map(p => (
+        <article class="bg-white rounded-2xl border border-[var(--beige)] shadow-sm hover:shadow-xl transition overflow-hidden flex flex-col" data-reveal>
+          <div class="bg-[var(--beige)]"><img src={p.img} alt={p.name} loading="lazy" class="w-full h-44 md:h-52 object-cover" /></div>
+          <div class="p-4 flex flex-col gap-2 flex-1">
+            <h3 class="serif font-bold text-lg text-[var(--forest)]">{p.name}</h3>
+            <p class="text-xs text-[var(--gold)] font-semibold">{p.qty}</p>
+            <p class="text-sm text-[#4c5b45] flex-1">{p.desc}</p>
+            <p class="font-bold text-[var(--forest)]">{p.price} <span class="text-xs font-normal text-[#7a8a72] line-through ml-1">MRP ₹{Math.round(parseInt(p.price.slice(1))*1.25)}</span></p>
+            <div class="flex gap-2 mt-1">
+              <button class="add-cart btn-primary text-xs font-semibold px-3 py-2 rounded-full flex-1" data-name={p.name}>Add to Cart</button>
+              <button class="text-xs font-semibold px-3 py-2 rounded-full flex-1 border border-[var(--forest)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-white" data-buy={p.name}>Buy Now</button>
+            </div>
+            <a href="#contact" class="text-center text-xs text-[var(--gold)] font-semibold hover:underline">View Details</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HAIR CONCERNS -->
+<section class="py-20 md:py-28 bg-[var(--forest)] text-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <h2 class="serif text-4xl md:text-5xl font-bold">Real Solutions for Real Hair Concerns</h2>
+      <p class="mt-4 text-[var(--cream)]/80">Explore a holistic Ayurvedic approach to everyday hair and scalp concerns.</p>
+    </div>
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-5 gap-4">
+      {[["Hair Fall", "https://images.pexels.com/photos/28994388/pexels-photo-28994388.jpeg?auto=compress&cs=tinysrgb&h=350"],["Weak Roots","https://images.pexels.com/photos/28994390/pexels-photo-28994390.jpeg?auto=compress&cs=tinysrgb&h=350"],["Dandruff","https://images.pexels.com/photos/7148534/pexels-photo-7148534.jpeg?auto=compress&cs=tinysrgb&h=350"],["Thin Hair","https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&h=350"],["Premature Greying","https://images.pexels.com/photos/34928259/pexels-photo-34928259.jpeg?auto=compress&cs=tinysrgb&h=350"]].map(([label, img]) => (
+        <a href="#products" class="relative rounded-2xl overflow-hidden group h-52" data-reveal>
+          <img src={img} alt={label} loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--forest)]/95 to-transparent"></div>
+          <span class="absolute bottom-3 inset-x-0 text-center font-semibold">{label}</span>
+        </a>
+      ))}
+    </div>
+    <div class="text-center mt-10" data-reveal><a href="#contact" class="btn-gold font-semibold px-7 py-3.5 rounded-full">Start Your Hair Journey →</a></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="py-20 md:py-28 bg-[var(--ivory)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <h2 class="serif text-4xl md:text-5xl font-bold text-[var(--forest)]">How Charak Hair Care Works</h2>
+      <p class="mt-4 text-[#4c5b45]">A simple and personalized approach to healthier hair.</p>
+    </div>
+    <ol class="mt-14 grid md:grid-cols-5 gap-8 relative">
+      {["Free Checkup|Visit our hair camp for an initial checkup.","Scalp Assessment|Understand your hair and scalp concerns.","Personalized Ayurvedic Guidance|Receive guidance based on your individual concerns.","Regular Follow-up|Continue your hair-care routine with regular follow-up.","Healthier, Stronger Hair|Build a consistent routine for healthier-looking hair."].map((s, i) => (
+        <li class="relative text-center" data-reveal>
+          <div class="mx-auto w-14 h-14 rounded-full bg-[var(--cream)] border-2 border-[var(--gold)] flex items-center justify-center serif font-bold text-lg text-[var(--forest)]">{i+1}</div>
+          {i < 4 && <span class="hidden md:block absolute top-7 left-[calc(50%+2.2rem)] w-[calc(100%-4.4rem)] border-t-2 border-dashed border-[var(--gold)]/50"></span>}
+          <h3 class="serif font-bold mt-4 text-[var(--forest)]">{s.split("|")[0]}</h3>
+          <p class="text-sm text-[#4c5b45] mt-2">{s.split("|")[1]}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- HAIR CAMPS -->
+<section id="camps" class="py-20 md:py-28 bg-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <h2 class="serif text-4xl md:text-5xl font-bold text-[var(--forest)]">Visit Our Hair Camps</h2>
+      <p class="mt-4 text-[#4c5b45]">Get a free checkup and personalized hair-care guidance at our weekly camps.</p>
+    </div>
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {camps.map((c, i) => (
+        <div class="bg-white rounded-2xl border border-[var(--beige)] shadow-sm hover:shadow-xl transition overflow-hidden flex flex-col" data-reveal>
+          <img src={["https://images.pexels.com/photos/5720765/pexels-photo-5720765.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/17843647/pexels-photo-17843647.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/38953147/pexels-photo-38953147.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&h=350"][i]} alt={`Hair camp in ${c.city}`} loading="lazy" class="w-full h-40 object-cover" />
+          <div class="p-5 flex flex-col gap-1.5 flex-1">
+            <h3 class="serif font-bold text-lg text-[var(--forest)]">{c.city}</h3>
+            <p class="text-sm font-semibold text-[var(--gold)]">{c.day} · {c.time}</p>
+            <p class="text-sm text-[#4c5b45] flex-1">{c.addr}</p>
+            <div class="flex gap-2 mt-3">
+              <a href={`https://www.google.com/maps/search/${encodeURIComponent("Charak Hair Care " + c.addr)}`} target="_blank" class="text-xs font-semibold px-3 py-2 rounded-full border border-[var(--forest)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-white flex-1 text-center">Get Directions</a>
+              <a href={wa} class="text-xs font-semibold px-3 py-2 rounded-full btn-primary flex-1 text-center">WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- VISIBLE RESULTS -->
+<section class="py-20 md:py-28 bg-[var(--botanical)] text-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto" data-reveal>
+      <h2 class="serif text-4xl md:text-5xl font-bold">Visible Results. Naturally.</h2>
+      <p class="mt-4 text-[var(--cream)]/80">Real customer journeys with consistent hair-care routines. Individual outcomes vary with every routine.</p>
+    </div>
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {["8 Weeks","10 Weeks","12 Weeks","6 Weeks"].map((w, i) => (
+        <div class="rounded-2xl overflow-hidden border border-white/15 bg-[var(--forest)]/60" data-reveal>
+          <div class="grid grid-cols-2">
+            <div class="relative"><img src={["https://images.pexels.com/photos/28994390/pexels-photo-28994390.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/37114348/pexels-photo-37114348.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/29201032/pexels-photo-29201032.jpeg?auto=compress&cs=tinysrgb&h=350"][i]} alt={`Customer journey ${i+1} — before`} loading="lazy" class="w-full h-44 object-cover grayscale-[40%]" /><span class="absolute top-2 left-2 bg-black/60 text-xs px-2 py-0.5 rounded-full">Before</span></div>
+            <div class="relative"><img src={["https://images.pexels.com/photos/28994388/pexels-photo-28994388.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/37114348/pexels-photo-37114348.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&h=350","https://images.pexels.com/photos/29201032/pexels-photo-29201032.jpeg?auto=compress&cs=tinysrgb&h=350"][i]} alt={`Customer journey ${i+1} — after`} loading="lazy" class="w-full h-44 object-cover" /><span class="absolute top-2 left-2 bg-[var(--gold)] text-[#1c1408] text-xs font-bold px-2 py-0.5 rounded-full">After</span></div>
+          </div>
+          <p class="text-center text-sm py-3 font-semibold">{w} of consistent routine</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="about" class="py-20 md:py-28 bg-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="serif text-4xl md:text-5xl font-bold text-center text-[var(--forest)]" data-reveal>Why Choose Charak Hair Care?</h2>
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-5">
+      {["100% Ayurvedic","Natural Ingredients","No Harsh Chemicals","Suitable for Men & Women","Trusted by Thousands","Pan India Delivery"].map((t, i) => (
+        <div class="bg-white rounded-2xl border border-[var(--beige)] p-6 text-center hover:shadow-lg transition" data-reveal>
+          <svg class="mx-auto text-[var(--forest)]" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            {[<path d="M12 21C5 16 4 9 8 4c5 1 9 5 8 12-1 3-2 4-4 5Z"/>,<path d="M12 3c4 3 6 7 5 12-2 4-6 6-10 5C6 15 8 7 12 3Z"/>,<path d="M4 14c3-6 9-9 16-8-1 7-6 11-12 11-2 0-3-1-4-3Z"/>,<circle cx="12" cy="12" r="8"/><path d="M12 4v16"/>,<path d="M8 21c0-6 2-12 8-16M8 15c-2 1-4 1-6 0M10 10C7 9 5 7 4 4c4 0 7 2 8 6"/>,<path d="M3 12h13M12 5l7 7-7 7"/>][i]}
+          </svg>
+          <p class="mt-4 font-semibold text-[var(--forest)]">{t}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- MORE REAL STORIES -->
+<section class="py-20 md:py-28 bg-[var(--ivory)]">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="serif text-4xl md:text-5xl font-bold text-center text-[var(--forest)]" data-reveal>More Real Hair Journeys</h2>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      {[["Amit S.","Indore","Hair fall kam hua aur improvement notice hua.","https://images.pexels.com/photos/5720765/pexels-photo-5720765.jpeg?auto=compress&cs=tinysrgb&h=350"],["Sneha P.","Ujjain","Scalp ki problem ab kaafi kam ho gayi.","https://images.pexels.com/photos/6594747/pexels-photo-6594747.jpeg?auto=compress&cs=tinysrgb&h=350"],["Pooja M.","Ujjain","Mere baal pehle se stronger feel hote hain.","https://images.pexels.com/photos/29201032/pexels-photo-29201032.jpeg?auto=compress&cs=tinysrgb&h=350"]].map(([n, c, q, img]) => (
+        <figure class="bg-white rounded-2xl border border-[var(--beige)] overflow-hidden shadow-sm hover:shadow-lg transition" data-reveal>
+          <img src={img} alt={`${n}, ${c}`} loading="lazy" class="w-full h-56 object-cover" />
+          <figcaption class="p-5"><blockquote class="text-[#4c5b45] italic">“{q}”</blockquote><p class="mt-3 text-sm font-semibold text-[var(--gold)]">{n} · {c}</p></figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="text-center mt-10" data-reveal><a href="#stories" class="btn-primary font-semibold px-7 py-3.5 rounded-full">Watch All Stories →</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-20 md:py-28 bg-[var(--cream)]">
+  <div class="max-w-3xl mx-auto px-4">
+    <h2 class="serif text-4xl md:text-5xl font-bold text-center text-[var(--forest)]" data-reveal>Frequently Asked Questions</h2>
+    <div class="mt-10 space-y-3">
+      {faqs.map(f => (
+        <details class="bg-white rounded-xl border border-[var(--beige)] group" data-reveal>
+          <summary class="flex items-center justify-between gap-4 p-5 font-semibold text-[var(--forest)] cursor-pointer list-none">
+            {f.q}<span class="faq-icon text-2xl text-[var(--gold)] transition-transform">+</span>
+          </summary>
+          <p class="px-5 pb-5 text-[#4c5b45]">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="relative py-24 md:py-32 bg-[var(--forest)] text-[var(--cream)] overflow-hidden">
+  <svg class="absolute top-0 right-0 w-72 opacity-10 text-[var(--cream)]" viewBox="0 0 100 100" fill="currentColor"><path d="M95 10C55 20 30 55 40 95c35-5 55-40 55-85Z"/></svg>
+  <div class="max-w-3xl mx-auto px-4 text-center" data-reveal>
+    <h2 class="serif text-5xl md:text-6xl font-bold">Healthy Hair.<br/>Happier You.</h2>
+    <p class="mt-5 text-lg text-[var(--cream)]/85">Start your hair-care journey with Charak Hair Care.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <a href="#contact" class="btn-gold font-semibold px-8 py-4 rounded-full">Book Free Checkup →</a>
+      <a href={wa} class="border border-[var(--cream)] font-semibold px-8 py-4 rounded-full hover:bg-[var(--cream)] hover:text-[var(--forest)]">Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-20 md:py-28 bg-[var(--ivory)]">
+  <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-start">
+    <div data-reveal>
+      <h2 class="serif text-4xl font-bold text-[var(--forest)]">Book Your Free Checkup</h2>
+      <p class="mt-4 text-[#4c5b45]">Share your details and our team will reach out with your nearest hair camp and a personalized routine. Prefer instant help? Message us on WhatsApp at <a href={wa} class="font-semibold text-[var(--forest)] underline">7038829809</a>.</p>
+      <ul class="mt-6 space-y-3 text-sm text-[#4c5b45]">
+        <li>📞 7038829809</li>
+        <li>✉️ support@charakhaircare.com</li>
+        <li>📍 Charak Hair Care, Indore, Madhya Pradesh</li>
+      </ul>
+    </div>
+    <KleapForm client:load formId="contact" title="Book Free Checkup" fields={[{name:"name",label:"Your Name",type:"text",required:true},{name:"phone",label:"Phone / WhatsApp Number",type:"tel",required:true},{name:"city",label:"City",type:"text",required:true},{name:"concern",label:"Your Hair Concern",type:"textarea",required:false}]} submitText="Book Free Checkup" />
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-[var(--forest)] text-[var(--cream)]">
+  <div class="max-w-7xl mx-auto px-4 py-14 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="serif text-2xl font-bold">JEEV ANKUR</div>
+      <div class="text-[10px] tracking-[0.25em] text-[var(--gold)] uppercase mt-1">By Charak Hair Care</div>
+      <p class="mt-4 text-sm text-[var(--cream)]/75 italic">Ancient Wisdom. Healthier Hair. A Better You.</p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-4 text-[var(--gold)]">Quick Links</h3>
+      <ul class="space-y-2 text-sm text-[var(--cream)]/80">
+        <li><a href="/" class="hover:text-white">Home</a></li><li><a href="#about">About</a></li><li><a href="#products">Products</a></li><li><a href="#camps">Hair Camps</a></li><li><a href="#stories">Real Stories</a></li><li><a href="#how">How to Use</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-4 text-[var(--gold)]">Our Products</h3>
+      <ul class="space-y-2 text-sm text-[var(--cream)]/80">
+        {products.map(p => <li><a href="#products" class="hover:text-white">{p.name}</a></li>)}
+        <li><a href="#products" class="hover:text-white">Complete Hair Care Kit</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-4 text-[var(--gold)]">Contact Us</h3>
+      <ul class="space-y-2 text-sm text-[var(--cream)]/80">
+        <li><a href="tel:+917038829809">7038829809</a></li>
+        <li><a href="mailto:support@charakhaircare.com">support@charakhaircare.com</a></li>
+        <li>Charak Hair Care, Indore, Madhya Pradesh</li>
+      </ul>
+      <h3 class="font-semibold mt-6 mb-3 text-[var(--gold)]">Follow Us</h3>
+      <div class="flex gap-3">
+        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M13 22v-8h3l.5-4H13V7.5c0-1 .3-1.5 1.7-1.5H16V2.2C15.4 2.1 14.3 2 13.2 2 10.4 2 8.5 3.7 8.5 7v3H6v4h2.5v8H13Z"/></svg></a>
+        <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23 12s0-4-.5-5.8c-.3-1-1.1-1.8-2.1-2C18.6 3.7 12 3.7 12 3.7s-6.6 0-8.4.5c-1 .2-1.8 1-2.1 2C1 8 1 12 1 12s0 4 .5 5.8c.3 1 1.1 1.8 2.1 2 1.8.5 8.4.5 8.4.5s6.6 0 8.4-.5c-1 0 1.8-1 2.1-2 .5-1.8.5-5.8.5-5.8ZM9.8 15.5v-7l6 3.5-6 3.5Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[var(--cream)]/70">
+      <p>© {new Date().getFullYear()} Charak Hair Care. All Rights Reserved.</p>
+      <div class="flex gap-5"><a href="#" class="hover:text-white">Privacy Policy</a><a href="#" class="hover:text-white">Terms & Conditions</a><a href="#" class="hover:text-white">Shipping Policy</a><a href="#" class="hover:text-white">Refund Policy</a></div>
+    </div>
+  </div>
+  <a href={wa} aria-label="Chat on WhatsApp" class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-[#25D366] shadow-xl flex items-center justify-center hover:scale-105 transition">
+    <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-6-5.3c-.6-1-.9-2-.6-2.9.1-.5.6-1.2 1-1.4.3-.2.8-.1 1 .3l.8 1.5c.1.3 0 .6-.2.8l-.4.5c-.1.2-.2.4 0 .7.6 1 1.6 2 2.7 2.6.3.1.5.1.7-.1l.6-.7c.2-.3.5-.3.8-.2l1.5.8c.4.2.5.7.4 1.3Z"/></svg>
+  </a>
+</footer>
+
+<script is:inline>
+  document.getElementById("menu-btn").addEventListener("click", () => document.getElementById("mobile-menu").classList.toggle("hidden"));
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: 0.12 });
+  document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+  // carousel
+  const track = document.getElementById("reel-track"), dots = document.getElementById("reel-dots");
+  const cards = track.children, n = cards.length;
+  for (let i = 0; i < n; i++) { const d = document.createElement("button"); d.className = "w-2.5 h-2.5 rounded-full bg-[#d8cdb4] transition"; d.setAttribute("aria-label","Go to story "+(i+1)); d.onclick = () => cards[i].scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"}); dots.appendChild(d); }
+  function setDot(){ const i = Math.round(track.scrollLeft / (cards[0].offsetWidth + 16)); [...dots.children].forEach((d,j)=>d.classList.toggle("bg-[var(--gold)]", j===Math.min(i,n-1))); }
+  track.addEventListener("scroll", () => requestAnimationFrame(setDot)); setDot();
+  document.getElementById("reel-prev").onclick = () => track.scrollBy({left: -cards[0].offsetWidth - 16, behavior:"smooth"});
+  document.getElementById("reel-next").onclick = () => track.scrollBy({left: cards[0].offsetWidth + 16, behavior:"smooth"});
+  // cart
+  let count = 0; const badge = document.getElementById("cart-count");
+  document.querySelectorAll(".add-cart").forEach(b => b.addEventListener("click", () => { count++; badge.textContent = count; badge.classList.remove("hidden"); badge.classList.add("flex"); }));
+  document.querySelectorAll("[data-buy]").forEach(b => b.addEventListener("click", () => { alert("Taking you to secure checkout for " + b.dataset.buy + " — COD and online payment both available."); }));
+  // faq single-open
+  document.querySelectorAll("#faq details").forEach(d => d.addEventListener("toggle", () => { if (d.open) document.querySelectorAll("#faq details").forEach(o => o !== d && (o.open = false)); }));
+</script>
+</Base>
